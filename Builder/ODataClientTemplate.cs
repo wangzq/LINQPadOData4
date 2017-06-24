@@ -248,6 +248,10 @@ namespace OData4.Builder
                 {
                     WriteEnumType(enumType);
                 }
+                else if (type is IEdmTypeDefinition)
+                {
+                    continue;
+                }
                 else
                 {
                     var complexType = type as IEdmComplexType;

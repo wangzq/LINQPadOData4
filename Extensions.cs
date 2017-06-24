@@ -10,6 +10,8 @@ using OData4.UI;
 
 namespace OData4
 {
+    using System.Net;
+
     public static class Extensions
     {
         public static ConnectionProperties GetConnectionProperties(this IConnectionInfo connectionInfo)
@@ -19,6 +21,8 @@ namespace OData4
 
         public static IEdmModel GetModel(this ConnectionProperties properties)
         {
+            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => properties.AcceptInvalidCertificate;
+
             var uri = properties.Uri;
             uri += uri.EndsWith("/") ? "$metadata" : "/$metadata";
 

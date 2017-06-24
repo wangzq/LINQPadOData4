@@ -77,6 +77,12 @@ namespace OData4.Builder
             string clrTypeName;
             var edmType = edmTypeReference.Definition;
             var edmPrimitiveType = edmType as IEdmPrimitiveType;
+            IEdmTypeDefinition edmTypeDefinition = edmType as IEdmTypeDefinition;
+            if (edmPrimitiveType == null && edmTypeDefinition != null)
+            {
+                edmPrimitiveType = edmTypeDefinition.UnderlyingType;
+            }
+
             if (edmPrimitiveType != null)
             {
                 clrTypeName = GetClrTypeName(edmPrimitiveType, clientTemplate);
