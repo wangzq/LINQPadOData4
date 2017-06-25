@@ -14,6 +14,8 @@ using OData4.UI;
 
 namespace OData4
 {
+    using System.Diagnostics;
+
     public class OData4DynamicDriver : DynamicDataContextDriver
     {
         private const string BaseNamespacePrefix = "LINQPad.User";
@@ -108,6 +110,11 @@ namespace OData4
 
         public override List<ExplorerItem> GetSchemaAndBuildAssembly(IConnectionInfo connectionInfo, AssemblyName assemblyToBuild, ref string nameSpace, ref string typeName)
         {
+            if (Environment.GetEnvironmentVariable("LINQPadOData4Debug") != null)
+            {
+                Debugger.Launch();
+            }
+
             var properties = connectionInfo.GetConnectionProperties();
 
             // using code from Microsoft's OData v4 Client Code Generator. see https://visualstudiogallery.msdn.microsoft.com/9b786c0e-79d1-4a50-89a5-125e57475937
